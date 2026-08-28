@@ -66,6 +66,10 @@ def get_stats(conn):
     cursor.execute("""SELECT message, COUNT(*) FROM log_entries WHERE level = ? GROUP BY message ORDER BY COUNT(*) DESC """, ("ERROR",))
     return cursor.fetchall()
 
+def count_entries(conn):
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM log_entries")
+    return cursor.fetchone()[0]
 
 def main():
     parser = argparse.ArgumentParser()
@@ -98,8 +102,9 @@ def main():
 
             if args.stats:
                 stats = get_stats(conn)
+                total = count_entries(conn)
 
-                print("STATYSTYKI Z BAZY:")
+                print(f"STATYSTYKI Z BAZY ({total} wpisów):")
                 for message, count in stats:
                     print(f"{count}x {message}")
 
