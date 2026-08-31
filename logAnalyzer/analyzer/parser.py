@@ -2,7 +2,7 @@ import sys
 
 def parse_line(line):
     """Zamienia pojedynczą linię logu na słownik {date, time, level, message} albo None, jeśli linia jest niepoprawna."""
-    parts = line.split()
+    parts = line.strip().split(maxsplit=3)
     if len(parts) <  4:
         # Za mało pól, żeby zbudować poprawny wpis (np. pusta linia) - pomijamy ją
         return None
@@ -10,7 +10,7 @@ def parse_line(line):
                 "date": parts[0],                # zakładany format: <data> <czas> <poziom> <wiadomość...>
                 "time": parts[1],
                 "level": parts[2],
-                "message": " ".join(parts[3:])   # reszta linii sklejona z powrotem jako treść komunikatu
+                "message": parts[3]   # reszta linii sklejona z powrotem jako treść komunikatu
             }
     return entry
 
