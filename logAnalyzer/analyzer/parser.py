@@ -10,7 +10,7 @@ def parse_line(line):
                 "date": parts[0],                # zakładany format: <data> <czas> <poziom> <wiadomość...>
                 "time": parts[1],
                 "level": parts[2],
-                "message": parts[3]   # reszta linii sklejona z powrotem jako treść komunikatu
+                "message": parts[3] 
             }
     return entry
 
