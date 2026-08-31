@@ -18,6 +18,6 @@ def sample_entries():
          "message": "Brak polaczenia z baza WMSDB"},
         {"date": "2026-08-22", "time": "11:14:25", "level": "ERROR",
          "message": "Polaczenie z baza WMSDB nawiazane"},
-        {"date": "2026-08-22", "time": "11:14:25", "level": "INFO",
+        {"date": "2026-08-22", "time": "11:15:25", "level": "INFO",
          "message": "Polaczenie z baza WMSDB nawiazane"},
     ]
