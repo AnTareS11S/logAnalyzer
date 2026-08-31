@@ -1,39 +1,7 @@
-import sqlite3
+from analyzer.storage import save_entries, get_stats
 
-from analyzer.storage import save_entries, get_stats, create_database
-
-def test_save_entries_and_get_stats():
-    conn = sqlite3.connect(":memory:")
-   
-    create_database(conn)
-    entries = [
-        {
-            "date": "2026-08-20",
-            "time": "08:14:25",
-            "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "10:14:25",
-            "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "11:14:25",
-            "level": "ERROR",
-            "message": "Polaczenie z baza WMSDB nawiazane"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "11:14:25",
-            "level": "INFO",
-            "message": "Polaczenie z baza WMSDB nawiazane"
-        }
-    ]
-
-    save_entries(entries, conn)
+def test_save_entries_and_get_stats(conn, sample_entries):
+    save_entries(sample_entries, conn)
     stats = get_stats(conn)
 
     expected_stats = [
@@ -43,55 +11,15 @@ def test_save_entries_and_get_stats():
 
     assert stats == expected_stats
 
-def test_save_entries_count():
-    conn = sqlite3.connect(":memory:")
-    create_database(conn)
-    entries = [
-        {
-            "date": "2026-08-20",
-            "time": "08:14:25",
-            "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "10:14:25",
-            "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "11:14:25",
-            "level": "ERROR",
-            "message": "Polaczenie z baza WMSDB nawiazane"
-        }
-    ]
-
-    save_entries(entries, conn)
+def test_save_entries_count(conn, sample_entries):
+    save_entries(sample_entries, conn)
     count = conn.execute("SELECT COUNT(*) FROM log_entries").fetchone()[0]
 
-    assert count == 3
+    assert count == 4
 
-def test_save_entries_deduplication():
-    conn = sqlite3.connect(":memory:")
-    create_database(conn)
-    entries = [
-        {
-            "date": "2026-08-20",
-            "time": "08:14:25",
-            "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "10:14:25",
-            "level": "ERROR",
-            "message": "Niepoprawny wpis do testu deduplikacji"
-        }
-    ]
-
-    save_entries(entries, conn)
-    save_entries(entries, conn) 
+def test_save_entries_deduplication(conn, sample_entries):
+    save_entries(sample_entries, conn)
+    save_entries(sample_entries, conn)
     count = conn.execute("SELECT COUNT(*) FROM log_entries").fetchone()[0]
 
-    assert count == 2
+    assert count == 4
