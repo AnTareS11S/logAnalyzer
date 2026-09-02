@@ -27,12 +27,12 @@ def test_filter_errors_returns_only_errors(sample_entries):
 
 
 
-def test_empty_entries():
+def test_filter_errors_empty_input():
     entries = []
     result = filter_errors(entries)
     assert result == []
 
-def test_no_errors():
+def test_filter_errors_no_matches():
     entries = [
         {
             "date": "2026-08-20",
