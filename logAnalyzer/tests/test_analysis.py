@@ -6,19 +6,22 @@ def test_filter_errors_returns_only_errors(sample_entries):
         "date": "2026-08-20",
         "time": "08:14:25",
         "level": "ERROR",
-        "message": "Brak polaczenia z baza WMSDB"
+        "message": "Brak polaczenia z baza WMSDB",
+        "source_file": "wms.log"
     },
     {
         "date": "2026-08-22",
         "time": "10:14:25",
         "level": "ERROR",
-        "message": "Brak polaczenia z baza WMSDB"
+        "message": "Brak polaczenia z baza WMSDB",
+        "source_file": "wms.log"
     },
     {
         "date": "2026-08-22",
         "time": "11:14:25",
         "level": "ERROR",
-        "message": "Polaczenie z baza WMSDB nawiazane"
+        "message": "Polaczenie z baza WMSDB nawiazane",
+        "source_file": "wms.log"
     }
     ]
 
@@ -32,28 +35,8 @@ def test_filter_errors_empty_input():
     result = filter_errors(entries)
     assert result == []
 
-def test_filter_errors_no_matches():
-    entries = [
-        {
-            "date": "2026-08-20",
-            "time": "08:14:25",
-            "level": "INFO",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "10:14:25",
-            "level": "DEBUG",
-            "message": "Brak polaczenia z baza WMSDB"
-        },
-        {
-            "date": "2026-08-22",
-            "time": "11:14:25",
-            "level": "WARNING",
-            "message": "Polaczenie z baza WMSDB nawiazane"
-        }
-    ]
-    result = filter_errors(entries)
+def test_filter_errors_no_matches(sample_entries_no_errors):  
+    result = filter_errors(sample_entries_no_errors)
     assert result == []
 
 
@@ -67,7 +50,8 @@ def test_filter_by_time(sample_entries):
             "date": "2026-08-22",
             "time": "10:14:25",
             "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
+            "message": "Brak polaczenia z baza WMSDB",
+            "source_file": "wms.log"
         }
     ]
 
@@ -98,13 +82,15 @@ def test_filter_by_time_entries_on_boundaries(sample_entries):
             "date": "2026-08-22",
             "time": "10:14:25",
             "level": "ERROR",
-            "message": "Brak polaczenia z baza WMSDB"
+            "message": "Brak polaczenia z baza WMSDB",
+            "source_file": "wms.log"
         },
         {
             "date": "2026-08-22",
             "time": "11:14:25",
             "level": "ERROR",
-            "message": "Polaczenie z baza WMSDB nawiazane"
+            "message": "Polaczenie z baza WMSDB nawiazane",
+            "source_file": "wms.log"
         }
     ]
 
