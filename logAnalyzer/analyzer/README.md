@@ -12,17 +12,17 @@ python -m analyzer.cli <plik_logu> [opcje]
 
 ### Dostępne opcje
 
-| Opcja            | Opis                                                                                |
-| ---------------- | ------------------------------------------------------------------------------------|
-| `filename`       | (wymagane) ścieżka do pliku logu lub katalogu z plikami `*.log`                     |
-| `--from`, `--to` | zakres czasu do filtrowania błędów, format `HH:MM:SS` (oba muszą być podane razem)  |
-| `--out`          | ścieżka do pliku CSV, do którego zapisane zostanie podsumowanie                     |
-| `--db`           | ścieżka do pliku bazy SQLite (domyślnie `logs.db`)                                  |
-| `--save`         | zapisuje wczytane wpisy do bazy danych                                              |
-| `--stats`        | wypisuje statystyki błędów odczytane z bazy danych                                  |
-| `--by-day`       | wypisuje liczbę błędów w bazie danych dla każdego dnia                             |
-| `--top-days N`   | wypisuje N dni z bazy danych z największą liczbą błędów                            |
-| `--min-errors N` | wypisuje dni z bazy danych z liczbą błędów większą niż N                           |
+| Opcja            | Opis                                                                                   |
+| ---------------- | ---------------------------------------------------------------------------------------|
+| `filename`       | (wymagane) ścieżka do pliku logu lub katalogu z plikami `*.log`                        |
+| `--from`, `--to` | zakres czasu do filtrowania błędów, format `HH:MM:SS` (oba muszą być podane razem)     |
+| `--out`          | ścieżka do pliku CSV, do którego zapisane zostanie podsumowanie                        |
+| `--db`           | ścieżka do pliku bazy SQLite (domyślnie `logs.db`)                                     |
+| `--save`         | zapisuje wczytane wpisy do bazy danych                                                 |
+| `--stats`        | wypisuje statystyki błędów odczytane z bazy danych                                     |
+| `--by-day`       | wypisuje liczbę błędów w bazie danych dla każdego dnia                                 |
+| `--top-days N`   | wypisuje N dni z bazy danych z największą liczbą błędów                                |
+| `--min-errors N` | wypisuje dni z bazy danych z liczbą błędów większą niż N                               |
 | `--day DATA`     | wypisuje podsumowanie wszystkich wpisów z bazy danych dla podanego dnia (`YYYY-MM-DD`) |
 
 `--by-day`, `--top-days`, `--min-errors` i `--day` czytają z bazy wskazanej przez `--db` — żeby zwróciły wyniki, wpisy muszą być w niej już zapisane (przez wcześniejsze albo to samo wywołanie z `--save`).

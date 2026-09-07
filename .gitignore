@@ -3,3 +3,8 @@ __pycache__/
 logs.db
 *.csv
 .venv/
+logAnalyzer/logs/
+logAnalyzer/wms.log
+logAnalyzerV1.py
+logAnalyzerV2.py
+logAnalyzerV3.py

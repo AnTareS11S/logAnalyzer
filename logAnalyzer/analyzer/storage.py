@@ -88,7 +88,7 @@ def get_days_with_min_errors(conn, min_count):
 def get_day_summary(conn, day):
     cursor = conn.cursor()
     cursor.execute(
-        """SELECT message, COUNT(*) FROM log_entries WHERE date = ? GROUP BY message ORDER BY COUNT(*) DESC""",
+        """SELECT message, COUNT(*) FROM log_entries WHERE date = ? GROUP BY message ORDER BY COUNT(*) DESC, message""",
         (day,),
     )
     return cursor.fetchall()
