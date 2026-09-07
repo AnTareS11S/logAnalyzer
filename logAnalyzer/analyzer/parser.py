@@ -1,18 +1,20 @@
 from pathlib import Path
 
+
 def parse_line(line):
     """Zamienia pojedynczą linię logu na słownik {date, time, level, message} albo None, jeśli linia jest niepoprawna."""
     parts = line.strip().split(maxsplit=3)
-    if len(parts) <  4:
+    if len(parts) < 4:
         # Za mało pól, żeby zbudować poprawny wpis (np. pusta linia) - pomijamy ją
         return None
     entry = {
-                "date": parts[0],                # zakładany format: <data> <czas> <poziom> <wiadomość...>
-                "time": parts[1],
-                "level": parts[2],
-                "message": parts[3] 
-            }
+        "date": parts[0],  # zakładany format: <data> <czas> <poziom> <wiadomość...>
+        "time": parts[1],
+        "level": parts[2],
+        "message": parts[3],
+    }
     return entry
+
 
 def read_single_file(filename):
     """Czyta plik logu i zwraca listę sparsowanych wpisów."""
@@ -25,11 +27,11 @@ def read_single_file(filename):
             result["source_file"] = Path(filename).name
             entries.append(result)
         return entries
-    
+
 
 def read_file(filename):
     path = Path(filename)
-    
+
     if path.is_dir():
         all_entries = []
 
@@ -38,5 +40,5 @@ def read_file(filename):
             all_entries.extend(entries)
 
         return all_entries
-    else: 
+    else:
         return read_single_file(filename)

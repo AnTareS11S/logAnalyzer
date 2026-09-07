@@ -1,33 +1,33 @@
 from analyzer.analysis import filter_by_time, filter_errors
 
+
 def test_filter_errors_returns_only_errors(sample_entries):
     expected_result = [
-    {
-        "date": "2026-08-20",
-        "time": "08:14:25",
-        "level": "ERROR",
-        "message": "Brak polaczenia z baza WMSDB",
-        "source_file": "wms.log"
-    },
-    {
-        "date": "2026-08-22",
-        "time": "10:14:25",
-        "level": "ERROR",
-        "message": "Brak polaczenia z baza WMSDB",
-        "source_file": "wms.log"
-    },
-    {
-        "date": "2026-08-22",
-        "time": "11:14:25",
-        "level": "ERROR",
-        "message": "Polaczenie z baza WMSDB nawiazane",
-        "source_file": "wms.log"
-    }
+        {
+            "date": "2026-08-20",
+            "time": "08:14:25",
+            "level": "ERROR",
+            "message": "Brak polaczenia z baza WMSDB",
+            "source_file": "wms.log",
+        },
+        {
+            "date": "2026-08-22",
+            "time": "10:14:25",
+            "level": "ERROR",
+            "message": "Brak polaczenia z baza WMSDB",
+            "source_file": "wms.log",
+        },
+        {
+            "date": "2026-08-22",
+            "time": "11:14:25",
+            "level": "ERROR",
+            "message": "Polaczenie z baza WMSDB nawiazane",
+            "source_file": "wms.log",
+        },
     ]
 
     result = filter_errors(sample_entries)
     assert result == expected_result
-
 
 
 def test_filter_errors_empty_input():
@@ -35,7 +35,8 @@ def test_filter_errors_empty_input():
     result = filter_errors(entries)
     assert result == []
 
-def test_filter_errors_no_matches(sample_entries_no_errors):  
+
+def test_filter_errors_no_matches(sample_entries_no_errors):
     result = filter_errors(sample_entries_no_errors)
     assert result == []
 
@@ -51,12 +52,13 @@ def test_filter_by_time(sample_entries):
             "time": "10:14:25",
             "level": "ERROR",
             "message": "Brak polaczenia z baza WMSDB",
-            "source_file": "wms.log"
+            "source_file": "wms.log",
         }
     ]
 
     result = filter_by_time(sample_entries, from_hour, to_hour)
     assert result == expected_result
+
 
 def test_filter_by_time_empty_entries():
     entries = []
@@ -65,6 +67,7 @@ def test_filter_by_time_empty_entries():
 
     assert result == []
 
+
 def test_filter_by_time_no_matching_entries(sample_entries):
     from_hour = "12:00:00"
     to_hour = "13:00:00"
@@ -72,6 +75,7 @@ def test_filter_by_time_no_matching_entries(sample_entries):
     result = filter_by_time(sample_entries, from_hour, to_hour)
 
     assert result == []
+
 
 def test_filter_by_time_entries_on_boundaries(sample_entries):
     from_hour = "10:14:25"
@@ -83,15 +87,15 @@ def test_filter_by_time_entries_on_boundaries(sample_entries):
             "time": "10:14:25",
             "level": "ERROR",
             "message": "Brak polaczenia z baza WMSDB",
-            "source_file": "wms.log"
+            "source_file": "wms.log",
         },
         {
             "date": "2026-08-22",
             "time": "11:14:25",
             "level": "ERROR",
             "message": "Polaczenie z baza WMSDB nawiazane",
-            "source_file": "wms.log"
-        }
+            "source_file": "wms.log",
+        },
     ]
 
     result = filter_by_time(sample_entries, from_hour, to_hour)
