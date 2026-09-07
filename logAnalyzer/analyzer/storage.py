@@ -11,26 +11,20 @@ def save_csv(summary_data, filename):
 
 def create_database(conn):
     """Tworzy tabelę log_entries, jeśli jeszcze nie istnieje.
-    UNIQUE(date, time, level, message) sprawia, że baza sama pilnuje unikalności wpisu -
-    ta sama kombinacja tych czterech pól nie może się powtórzyć (patrz save_entries)."""
+    UNIQUE(date, time, level, message, source_file) sprawia, że baza sama pilnuje unikalności wpisu -
+    ta sama kombinacja tych pięciu pól nie może się powtórzyć (patrz save_entries)."""
     cursor = conn.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS log_entries (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, time TEXT, level TEXT, message TEXT, UNIQUE(date, time, level, message))')
+    cursor.execute('CREATE TABLE IF NOT EXISTS log_entries (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, time TEXT, level TEXT, message TEXT, source_file TEXT, UNIQUE(date, time, level, message, source_file))')
 
 def save_entries(entries, conn):
-    """Zapisuje listę wpisów do bazy danych za jednym razem (executemany = wiele wstawień w jednym wywołaniu,
-    szybsze niż osobny INSERT dla każdego wpisu w pętli).
-    Znaki zapytania (?) w zapytaniu SQL to placeholdery - biblioteka sama bezpiecznie
-    podstawia w ich miejsce wartości z krotek, chroniąc przed SQL injection.
-    "INSERT OR IGNORE" oznacza: jeśli wpis o takich samych (date, time, level, message)
-    już istnieje w bazie (patrz UNIQUE w create_database), po prostu go pomiń zamiast rzucać błąd.
-    Dzięki temu można bezpiecznie uruchamiać --save wielokrotnie na tym samym pliku
-    bez duplikowania wpisów."""
+    """Zapisuje listę wpisów do bazy danych za jednym razem."""
     cursor = conn.cursor()
-    cursor.executemany("""INSERT OR IGNORE INTO log_entries (date, time, level, message) VALUES (?, ?, ?, ?) """, [(
+    cursor.executemany("""INSERT OR IGNORE INTO log_entries (date, time, level, message, source_file) VALUES (?, ?, ?, ?, ?) """, [(
         entry['date'],
         entry['time'],
         entry['level'],
-        entry['message']
+        entry['message'],
+        entry['source_file']
     )
         for entry in entries
     ])
