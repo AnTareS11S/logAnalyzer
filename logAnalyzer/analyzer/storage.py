@@ -46,10 +46,15 @@ def count_entries(conn):
 
 def get_errors_by_day(conn):
     cursor = conn.cursor()
-    cursor.execute("""SELECT date, COUNT(*) from log_entries WHERE level = ? GROUP BY date ORDER BY date""", ("ERROR",))
+    cursor.execute("""SELECT date, COUNT(*) FROM log_entries WHERE level = ? GROUP BY date ORDER BY date""", ("ERROR",))
     return cursor.fetchall()
 
 def get_top_days(conn, limit):
     cursor = conn.cursor()
-    cursor.execute("""SELECT date, COUNT(*) from log_entries WHERE level = ? GROUP BY date ORDER BY COUNT(*) DESC LIMIT ?""", ("ERROR", limit,))
+    cursor.execute("""SELECT date, COUNT(*) FROM log_entries WHERE level = ? GROUP BY date ORDER BY COUNT(*) DESC LIMIT ?""", ("ERROR", limit))
+    return cursor.fetchall()
+
+def get_days_with_min_errors(conn, min_count):
+    cursor = conn.cursor()
+    cursor.execute("""SELECT date, COUNT(*) FROM log_entries WHERE level = ? GROUP BY date HAVING COUNT(*) > ? """, ("ERROR", min_count))
     return cursor.fetchall()
