@@ -1,4 +1,4 @@
-import sys
+from pathlib import Path
 
 def parse_line(line):
     """Zamienia pojedynczą linię logu na słownik {date, time, level, message} albo None, jeśli linia jest niepoprawna."""
@@ -14,18 +14,29 @@ def parse_line(line):
             }
     return entry
 
+def read_single_file(filename):
+    """Czyta plik logu i zwraca listę sparsowanych wpisów."""
+    with open(filename, encoding="utf-8") as file:
+        entries = []
+        for line in file:
+            result = parse_line(line)
+            if result is None:
+                continue
+            result["source_file"] = Path(filename).name
+            entries.append(result)
+        return entries
+    
+
 def read_file(filename):
-    """Czyta plik logu i zwraca listę sparsowanych wpisów.
-    Jeśli plik nie istnieje, wypisuje komunikat i kończy program (sys.exit(1) = zakończenie z kodem błędu)."""
-    try:
-        with open(filename, encoding="utf-8") as file:
-            entries = []
-            for line in file:
-                result = parse_line(line)
-                if result is None:
-                    continue
-                entries.append(result)
-            return entries
-    except FileNotFoundError:
-        print(f"Nie znaleziono pliku: {filename}")
-        sys.exit(1)
+    path = Path(filename)
+    
+    if path.is_dir():
+        all_entries = []
+
+        for log_file in path.glob("*.log"):
+            entries = read_single_file(log_file)
+            all_entries.extend(entries)
+
+        return all_entries
+    else: 
+        return read_single_file(filename)
