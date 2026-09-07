@@ -13,11 +13,24 @@ def conn():
 def sample_entries():
     return [
         {"date": "2026-08-20", "time": "08:14:25", "level": "ERROR",
-         "message": "Brak polaczenia z baza WMSDB"},
+         "message": "Brak polaczenia z baza WMSDB", "source_file": "wms.log"},
         {"date": "2026-08-22", "time": "10:14:25", "level": "ERROR",
-         "message": "Brak polaczenia z baza WMSDB"},
+         "message": "Brak polaczenia z baza WMSDB", "source_file": "wms.log"},
         {"date": "2026-08-22", "time": "11:14:25", "level": "ERROR",
-         "message": "Polaczenie z baza WMSDB nawiazane"},
+         "message": "Polaczenie z baza WMSDB nawiazane", "source_file": "wms.log"},
         {"date": "2026-08-22", "time": "11:15:25", "level": "INFO",
-         "message": "Polaczenie z baza WMSDB nawiazane"},
+         "message": "Polaczenie z baza WMSDB nawiazane", "source_file": "wms.log"},
+    ]
+
+@pytest.fixture
+def sample_entries_no_errors():
+    return [
+        {"date": "2026-08-20", "time": "08:14:25", "level": "DEBUG",
+         "message": "Polaczenie z baza WMSDB", "source_file": "wms.log"},
+        {"date": "2026-08-22", "time": "10:14:25", "level": "INFO",
+         "message": "Polaczenie z baza WMSDB", "source_file": "wms.log"},
+        {"date": "2026-08-22", "time": "11:14:25", "level": "DEBUG",
+         "message": "Polaczenie z baza WMSDB nawiazane", "source_file": "wms.log"},
+        {"date": "2026-08-22", "time": "11:15:25", "level": "INFO",
+         "message": "Polaczenie z baza WMSDB nawiazane", "source_file": "wms.log"},
     ]
