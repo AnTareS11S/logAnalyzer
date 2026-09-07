@@ -43,3 +43,8 @@ def count_entries(conn):
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM log_entries")
     return cursor.fetchone()[0]
+
+def get_errors_by_day(conn):
+    cursor = conn.cursor()
+    cursor.execute("""SELECT date, COUNT(*) from log_entries WHERE level = ? GROUP BY date ORDER BY date""", ("ERROR",))
+    return cursor.fetchall()
