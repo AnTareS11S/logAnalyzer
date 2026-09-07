@@ -25,7 +25,11 @@ def main():
 
     has_time_range = args.from_hour is not None and args.to_hour is not None
 
-    entries = read_file(args.filename)
+    try:
+        entries = read_file(args.filename)
+    except FileNotFoundError:
+        print(f"Błąd podczas odczytywania pliku: {args.filename}")
+        return
 
     conn = sqlite3.connect(args.db)
 
