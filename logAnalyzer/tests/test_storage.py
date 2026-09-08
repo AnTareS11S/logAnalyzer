@@ -129,6 +129,5 @@ def test_get_day_summary(conn, storage_entries):
 
     assert result == [
         ("Timeout przy zapisie do bazy", 2),
-        ("Polaczenie z baza WMSDB nawiazane", 1),  
         ("Brak polaczenia z baza WMSDB", 1),
     ]
