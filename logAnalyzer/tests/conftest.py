@@ -1,5 +1,7 @@
 import sqlite3
+
 import pytest
+
 from analyzer.storage import create_database
 
 

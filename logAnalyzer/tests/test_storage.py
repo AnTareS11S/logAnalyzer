@@ -1,10 +1,10 @@
 from analyzer.storage import (
-    save_entries,
-    get_stats,
-    get_errors_by_day,
-    get_top_days,
-    get_days_with_min_errors,
     get_day_summary,
+    get_days_with_min_errors,
+    get_errors_by_day,
+    get_stats,
+    get_top_days,
+    save_entries,
 )
 
 
