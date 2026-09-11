@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+analyzer/__init__.py
+analyzer/analysis.py
+analyzer/cli.py
+analyzer/parser.py
+analyzer/storage.py
+log_analyzer.egg-info/PKG-INFO
+log_analyzer.egg-info/SOURCES.txt
+log_analyzer.egg-info/dependency_links.txt
+log_analyzer.egg-info/entry_points.txt
+log_analyzer.egg-info/requires.txt
+log_analyzer.egg-info/top_level.txt
+tests/test_analysis.py
+tests/test_parser.py
+tests/test_storage.py
