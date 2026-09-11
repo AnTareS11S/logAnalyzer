@@ -1,5 +1,6 @@
 import argparse
 import sqlite3
+import sys
 from contextlib import closing
 
 from .analysis import filter_by_time, filter_errors, summarize
@@ -29,11 +30,15 @@ def cmd_import(args):
         save_entries(entries, conn)
 
 def cmd_analyze(args):
+    if (args.from_hour is None) != (args.to_hour is None):
+        print("Musisz podać jednocześnie --from i --to.", file=sys.stderr)
+        sys.exit(2)
+
     try:
         entries = read_file(args.filename)
     except FileNotFoundError:
-        print(f"Błąd podczas odczytywania pliku: {args.filename}")
-        return
+        print(f"Błąd podczas odczytywania pliku: {args.filename}", file=sys.stderr)
+        sys.exit(1)
 
     has_time_range = args.from_hour is not None and args.to_hour is not None
 
@@ -135,12 +140,7 @@ def main():
     day_parser.add_argument("date")
     day_parser.set_defaults(func=cmd_day_summary)
 
-    args = parser.parse_args()
-
-    if args.command == "analyze":
-        if (args.from_hour is None) != (args.to_hour is None):
-            parser.error("Musisz podać jednocześnie --from i --to.")
-
+    args = parser.parse_args()     
     args.func(args)
 
 
