@@ -140,7 +140,6 @@ def main():
     if args.command == "analyze":
         if (args.from_hour is None) != (args.to_hour is None):
             parser.error("Musisz podać jednocześnie --from i --to.")
-            return
 
     args.func(args)
 

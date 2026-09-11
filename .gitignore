@@ -8,3 +8,4 @@ logAnalyzer/wms.log
 logAnalyzerV1.py
 logAnalyzerV2.py
 logAnalyzerV3.py
+*.log
